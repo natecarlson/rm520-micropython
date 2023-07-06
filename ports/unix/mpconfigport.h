@@ -224,6 +224,11 @@ static inline unsigned long mp_random_seed_init(void) {
 #include <stdio.h>
 #endif
 
+// Enable threading
+#ifndef MICROPY_PY_THREAD
+#define MICROPY_PY_THREAD (1)
+#endif
+
 // If threading is enabled, configure the atomic section.
 #if MICROPY_PY_THREAD
 #define MICROPY_BEGIN_ATOMIC_SECTION() (mp_thread_unix_begin_atomic_section(), 0xffffffff)
@@ -250,4 +255,9 @@ static inline unsigned long mp_random_seed_init(void) {
 
 #ifndef MICROPY_PY_BLUETOOTH_ENABLE_L2CAP_CHANNELS
 #define MICROPY_PY_BLUETOOTH_ENABLE_L2CAP_CHANNELS (MICROPY_BLUETOOTH_NIMBLE)
+#endif
+
+// Whether to include doc strings (increases RAM usage)
+#ifndef MICROPY_ENABLE_DOC_STRING
+#define MICROPY_ENABLE_DOC_STRING (0)
 #endif
