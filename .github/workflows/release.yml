@@ -41,6 +41,15 @@ jobs:
     - name: Cross-compile for arm
       run: source tools/ci.sh && ci_unix_qemu_arm_build
 
+    - name: Install patchelf
+      run: sudo apt-get install patchelf
+
+    - name: Fix interpreter
+      run: patchelf --set-interpreter /lib/ld-linux-armhf.so.3 ports/unix/build-coverage/micropython
+
+    - name: Fix needed libs
+      run: patchelf --replace-needed ld-linux.so.3 ld-linux-armhf.so.3 ports/unix/build-coverage/micropython
+
     - name: Upload binaries to release
       uses: svenstaro/upload-release-action@v2
       with:
