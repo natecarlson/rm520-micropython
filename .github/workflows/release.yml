@@ -1,0 +1,44 @@
+name: unix port
+
+on:
+  #push:
+  # pull_request:
+  #   paths:
+  #     - '.github/workflows/*.yml'
+  #     - 'tools/**'
+  #     - 'py/**'
+  #     - 'extmod/**'
+  #     - 'shared/**'
+  #     - 'lib/**'
+  #     - 'examples/**'
+  #     - 'mpy-cross/**'
+  #     - 'ports/unix/**'
+  #     - 'tests/**'
+  workflow_dispatch:
+  release:
+    types:
+      - created
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build_qemu_arm:
+    runs-on: ubuntu-20.04
+    steps:
+    - name: Run the build process with Docker
+      uses: docker://ghcr.io/natecarlson/rm520-modem-buildenv:main
+    - uses: actions/checkout@v3
+    - name: Build compiler
+      run: make -C mpy-cross
+    - name: Pull in submodules
+      run: make -C ports/unix submodules
+    - name: Build
+      run: make -C ports/unix
+    - name: Copy build-artifacts
+      uses: skx/github-action-publish-binaries@master
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        args: "ports/unix/build-standard/micropython"
