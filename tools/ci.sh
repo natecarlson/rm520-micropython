@@ -388,7 +388,7 @@ CI_UNIX_OPTS_QEMU_MIPS=(
 
 CI_UNIX_OPTS_QEMU_ARM=(
     CROSS_COMPILE=arm-linux-gnueabi-
-    VARIANT=coverage
+    VARIANT=standard
     MICROPY_STANDALONE=1
 )
 

@@ -45,16 +45,16 @@ jobs:
       run: sudo apt-get install patchelf
 
     - name: Fix interpreter
-      run: patchelf --set-interpreter /lib/ld-linux-armhf.so.3 ports/unix/build-coverage/micropython
+      run: patchelf --set-interpreter /lib/ld-linux-armhf.so.3 ports/unix/build-standard/micropython
 
     - name: Fix needed libs
-      run: patchelf --replace-needed ld-linux.so.3 ld-linux-armhf.so.3 ports/unix/build-coverage/micropython
+      run: patchelf --replace-needed ld-linux.so.3 ld-linux-armhf.so.3 ports/unix/build-standard/micropython
 
     - name: Upload binaries to release
       uses: svenstaro/upload-release-action@v2
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
-        file: ports/unix/build-coverage/micropython
+        file: ports/unix/build-standard/micropython
         asset_name: micropython.rm520
         tag: ${{ github.ref }}
         overwrite: true
