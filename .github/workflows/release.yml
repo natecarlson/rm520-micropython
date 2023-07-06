@@ -27,6 +27,8 @@ jobs:
   build_qemu_arm:
     runs-on: ubuntu-20.04
     steps:
+    - name: Set up QEMU
+      uses: docker/setup-qemu-action@v2
     - name: Run the build process with Docker
       uses: docker://ghcr.io/natecarlson/rm520-modem-buildenv:main
     - uses: actions/checkout@v3
