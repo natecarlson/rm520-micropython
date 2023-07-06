@@ -45,7 +45,7 @@ jobs:
       uses: svenstaro/upload-release-action@v2
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
-        file: build-coverage/micropython
+        file: ports/unix/build-coverage/micropython
         asset_name: micropython.rm520
         tag: ${{ github.ref }}
         overwrite: true
