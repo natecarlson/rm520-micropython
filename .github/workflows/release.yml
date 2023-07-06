@@ -1,4 +1,4 @@
-name: unix port
+name: Build RM520 Unix Release
 
 on:
   #push:
@@ -19,9 +19,11 @@ on:
     types:
       - created
 
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+permissions: write-all
+
+# concurrency:
+#   group: ${{ github.workflow }}-${{ github.ref }}
+#   cancel-in-progress: true
 
 jobs:
   build_qemu_arm:
@@ -32,10 +34,16 @@ jobs:
     - name: Run the build process with Docker
       uses: docker://ghcr.io/natecarlson/rm520-modem-buildenv:main
     - uses: actions/checkout@v3
+
+    # Build the mpy cross-compiler
     - name: Build compiler
       run: make -C mpy-cross
+
+    # Grab only the submodules needed for unix port.
     - name: Pull in submodules
       run: make -C ports/unix submodules
+
+    # Actually build the unix port.
     - name: Build
       run: make -C ports/unix
     # - name: Copy build-artifacts
