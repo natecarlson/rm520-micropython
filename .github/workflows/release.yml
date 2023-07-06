@@ -38,9 +38,19 @@ jobs:
       run: make -C ports/unix submodules
     - name: Build
       run: make -C ports/unix
-    - name: Copy build-artifacts
-      uses: skx/github-action-publish-binaries@master
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    # - name: Copy build-artifacts
+    #   uses: skx/github-action-publish-binaries@master
+    #   env:
+    #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    #   with:
+    #     args: "ports/unix/build-standard/micropython"
+
+    - name: Upload binaries to release
+      uses: svenstaro/upload-release-action@v2
       with:
-        args: "ports/unix/build-standard/micropython"
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        file: ports/unix/buld-standard/micropython
+        asset_name: micropython.rm520
+        tag: ${{ github.ref }}
+        overwrite: true
+        body: "Micropython binary for Quectel RM520"
