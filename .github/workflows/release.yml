@@ -26,7 +26,7 @@ permissions: write-all
 #   cancel-in-progress: true
 
 jobs:
-  build_qemu_arm:
+  build_qemu_arm_rm520:
     runs-on: ubuntu-20.04
 
     steps:
@@ -59,3 +59,37 @@ jobs:
         tag: ${{ github.ref }}
         overwrite: true
         body: "Micropython ARM binary for Quectel RM520"
+
+  build_qemu_arm_rm50x:
+    runs-on: ubuntu-18.04
+
+    steps:
+
+    - name: checkout code
+      uses: actions/checkout@v3
+
+    # Build the mpy cross-compiler
+    - name: Setup build environment
+      run: source tools/ci.sh && ci_unix_qemu_arm_setup
+
+    - name: Cross-compile for arm
+      run: source tools/ci.sh && ci_unix_qemu_arm_build
+
+    - name: Install patchelf
+      run: sudo apt-get install patchelf
+
+    - name: Fix interpreter
+      run: patchelf --set-interpreter /lib/ld-linux-armhf.so.3 ports/unix/build-standard/micropython
+
+    - name: Fix needed libs
+      run: patchelf --replace-needed ld-linux.so.3 ld-linux-armhf.so.3 ports/unix/build-standard/micropython
+
+    - name: Upload binaries to release
+      uses: svenstaro/upload-release-action@v2
+      with:
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        file: ports/unix/build-standard/micropython
+        asset_name: micropython.rm50x
+        tag: ${{ github.ref }}
+        overwrite: true
+        body: "Micropython ARM binary for Quectel RM50x"
