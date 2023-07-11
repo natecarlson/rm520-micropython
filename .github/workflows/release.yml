@@ -77,18 +77,23 @@ jobs:
     # Build the mpy cross-compiler
     - name: Setup build environment
       run: source tools/ci.sh && ci_unix_qemu_arm_setup
+      shell: bash
 
     - name: Cross-compile for arm
       run: source tools/ci.sh && ci_unix_qemu_arm_build
+      shell: bash
 
     - name: Install patchelf
       run: sudo apt-get install patchelf
+      shell: bash
 
     - name: Fix interpreter
       run: patchelf --set-interpreter /lib/ld-linux-armhf.so.3 ports/unix/build-standard/micropython
+      shell: bash
 
     - name: Fix needed libs
       run: patchelf --replace-needed ld-linux.so.3 ld-linux-armhf.so.3 ports/unix/build-standard/micropython
+      shell: bash
 
     - name: Upload binaries to release
       uses: svenstaro/upload-release-action@v2
