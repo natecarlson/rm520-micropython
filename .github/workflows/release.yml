@@ -63,7 +63,7 @@ jobs:
   build_qemu_arm_rm50x:
     runs-on: ubuntu-latest
     container:
-      image: ubuntu-18.04
+      image: ubuntu:18.04
 
     steps:
 
