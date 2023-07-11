@@ -61,7 +61,9 @@ jobs:
         body: "Micropython ARM binary for Quectel RM520"
 
   build_qemu_arm_rm50x:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
+    container:
+      image: ubuntu-18.04
 
     steps:
 
