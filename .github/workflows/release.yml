@@ -67,7 +67,12 @@ jobs:
 
     steps:
 
-      # Install sudo, git, etc.
+    # Updated git repo
+    - name: Install git ppa
+      run: apt-get update && apt-get install -y software-properties-common && add-apt-repository ppa:git-core/ppa
+      shell: bash
+
+    # Install sudo, git, etc.
     - name: Install sudo
       run: apt-get update && apt-get install -y sudo bash build-essential git libffi-dev pkg-config patchelf file apt ca-certificates curl wget vim ssh python3
 
