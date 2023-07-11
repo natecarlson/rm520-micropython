@@ -73,11 +73,18 @@ jobs:
       shell: bash
 
     # Install sudo, git, etc.
-    - name: Install sudo
+    - name: Install sudo and other fun stuff
       run: apt-get update && apt-get install -y sudo bash build-essential git libffi-dev pkg-config patchelf file apt ca-certificates curl wget vim ssh python3
+
+    # Add current directory to git safe directories
+    - name: Git safe directories
+      run: git config --global --add safe.directory "$(pwd)"
+      shell: bash
 
     - name: checkout code
       uses: actions/checkout@v3
+      with:
+        submodules: true
 
     # Build the mpy cross-compiler
     - name: Setup build environment
