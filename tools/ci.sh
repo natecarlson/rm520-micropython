@@ -629,8 +629,8 @@ function ci_unix_qemu_mips_run_tests {
 
 function ci_unix_qemu_arm_setup {
     sudo apt-get update
-    sudo apt-get install gcc-arm-linux-gnueabi g++-arm-linux-gnueabi
-    sudo apt-get install qemu-user
+    sudo apt-get -y install gcc-arm-linux-gnueabi g++-arm-linux-gnueabi
+    sudo apt-get -y install qemu-user
     qemu-arm --version
 }
 
