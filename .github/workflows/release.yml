@@ -67,14 +67,12 @@ jobs:
 
     steps:
 
-    - name: checkout code
-      uses: actions/checkout@v3.5.2
-      with:
-        submodules: recursive
-
-    # Install sudo
+      # Install sudo, git, etc.
     - name: Install sudo
       run: apt-get update && apt-get install -y sudo bash build-essential git libffi-dev pkg-config patchelf file apt ca-certificates curl wget vim ssh python3
+
+    - name: checkout code
+      uses: actions/checkout@v3
 
     # Build the mpy cross-compiler
     - name: Setup build environment
