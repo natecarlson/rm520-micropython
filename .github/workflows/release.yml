@@ -69,7 +69,7 @@ jobs:
 
     # Updated git repo
     - name: Install git ppa
-      run: apt-get update && apt-get install -y software-properties-common && add-apt-repository ppa:git-core/ppa
+      run: apt-get update && apt-get install -y software-properties-common && add-apt-repository ppa:git-core/ppa && apt-get install git==1:2.41.0-0ppa1~ubuntu18.04.1
       shell: bash
 
     # Install sudo, git, etc.
