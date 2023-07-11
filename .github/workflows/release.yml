@@ -61,7 +61,7 @@ jobs:
         body: "Micropython ARM binary for Quectel RM520"
 
   build_qemu_arm_rm50x:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-18.04
 
     steps:
 
@@ -70,7 +70,7 @@ jobs:
 
     # Build the mpy cross-compiler
     - name: Setup build environment
-      run: source tools/ci.sh && ci_unix_qemu_arm_setup_linaro
+      run: source tools/ci.sh && ci_unix_qemu_arm_setup
 
     - name: Cross-compile for arm
       run: source tools/ci.sh && ci_unix_qemu_arm_build

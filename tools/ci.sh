@@ -634,18 +634,6 @@ function ci_unix_qemu_arm_setup {
     qemu-arm --version
 }
 
-function ci_unix_qemu_arm_setup_linaro {
-    # install linaro toolset to target older modems.
-    sudo apt-get update
-    sudo wget -O /var/tmp/gcc-linaro-7.5.0-2019.12-x86_64_arm-linux-gnueabi.tar.xz https://releases.linaro.org/components/toolchain/binaries/7.5-2019.12/arm-linux-gnueabi/gcc-linaro-7.5.0-2019.12-x86_64_arm-linux-gnueabi.tar.xz
-    sudo wget -O /var/tmp/runtime-gcc-linaro-7.5.0-2019.12-arm-linux-gnueabi.tar.xz https://releases.linaro.org/components/toolchain/binaries/7.5-2019.12/arm-linux-gnueabi/runtime-gcc-linaro-7.5.0-2019.12-arm-linux-gnueabi.tar.xz
-    sudo tar --strip-components=1 -xivf /var/tmp/gcc-linaro-7.5.0-2019.12-x86_64_arm-linux-gnueabi.tar.xz -C /usr
-    sudo tar --strip-components=1 -xivf /var/tmp/runtime-gcc-linaro-7.5.0-2019.12-arm-linux-gnueabi.tar.xz -C /
-    sudo ldconfig -v
-    sudo apt-get install qemu-user
-    qemu-arm --version
-}
-
 function ci_unix_qemu_arm_build {
     ci_unix_build_helper "${CI_UNIX_OPTS_QEMU_ARM[@]}"
     ci_unix_build_ffi_lib_helper arm-linux-gnueabi-gcc
